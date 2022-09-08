@@ -1,10 +1,14 @@
 package com.sweetTreats.Sweet_Treats_With_Spring_Boot.entity;
 
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,11 +17,20 @@ public class Courier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull(message = "Cannot be less than three or empty")
+    @Length(min = 3)
     private String name;
+    @NotNull(message = "Cannot be less than one or empty")
+    @Min(1)
     private double maxDistance;
+    @NotNull(message = "Cannot be less than one or empty")
+    @Min(1)
     private double pricePerMile;
+    @NotNull(message = "Can not be empty(Format required HH:mm)")
     private LocalTime startTime;
+    @NotNull(message = "Can not be empty(Format required HH:mm)")
     private LocalTime endTime;
+    @NotNull(message = "Can not be empty boolean required")
     private boolean hasRefrigeratedBox;
 
 

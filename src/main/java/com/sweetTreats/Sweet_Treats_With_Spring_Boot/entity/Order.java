@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
@@ -14,11 +16,12 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotNull(message = "Can not be empty(Format required HH:mm)")
     private LocalTime orderTime;
-
+    @NotNull(message = "Can not be empty boolean required")
     private boolean isRefrigeratedBoxRequired;
-
+    @NotNull(message = "Cannot be less than one or empty")
+    @Min(1)
     private double distance;
 
     // Constructor for Order class.
