@@ -1,0 +1,36 @@
+Sept 08, 2022 10:56:26 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getAllCouriers
+INFO: Getting All Couriers.
+Sept 08, 2022 10:56:55 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation addCourier
+INFO: New Courier added: Doe
+Sept 08, 2022 10:57:14 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation findCourier
+INFO: Getting a Courier With ID: 1
+Sept 08, 2022 10:57:14 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation updateCourierDetails
+INFO: Updating Courier Details of Id: 1 Name: Bobby
+Changing
+Name: Bobby to: bob
+Working Hours: 09:00 - 13:00 to: 09:00-17:00
+Has Refrigerated Box: true to: false
+Price Per Mile: £1.5 to: £1.7
+Sept 08, 2022 10:57:19 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getAllCouriers
+INFO: Getting All Couriers.
+Sept 08, 2022 10:57:25 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation deleteCourier
+INFO: Courier: 1 has been Deleted.
+Sept 08, 2022 10:57:32 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getAllCouriers
+INFO: Getting All Couriers.
+Sept 08, 2022 10:57:37 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getBestSuitableCourier
+WARNING: No suitable courier found for this order: 
+Order Time: 13:30
+Refrigerated Box Required: true
+Distance Between Customer And Restaurant: 5.0 miles.
+Sept 08, 2022 10:57:51 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getBestSuitableCourier
+INFO: Best suitable courier for this order is: John
+Working Hours: 10:00 - 16:00
+Has Refrigerated Box: true
+Price: £1.25 per mile
+Total Delivery Price For This Order is: £3.75
+Sept 08, 2022 10:58:45 AM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getBestSuitableCourier
+INFO: Best suitable courier for this order is: John
+Working Hours: 10:00 - 16:00
+Has Refrigerated Box: true
+Price: £1.25 per mile
+Total Delivery Price For This Order is: £3.75
