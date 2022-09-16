@@ -31,12 +31,12 @@ public class Controller {
 
     @RequestMapping(path = "/add_courier", method = RequestMethod.POST)
     public ResponseEntity<Courier> addCourier(@RequestBody Courier courier) throws Exception {
-        if (courierService.isCourierInformationValid(courier)) {
-            Courier newCourier = courierService.addCourier(courier);
-            return new ResponseEntity<Courier>(newCourier, HttpStatus.CREATED);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Correct Courier info needed");
-        }
+//        if (courierService.isCourierInformationValid(courier)) {
+        Courier newCourier = courierService.addCourier(courier);
+        return new ResponseEntity<Courier>(newCourier, HttpStatus.CREATED);
+//        } else {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Correct Courier info needed");
+//        }
 
     }
 
@@ -48,7 +48,7 @@ public class Controller {
     }
 
     @RequestMapping(path = "/courier/{id}")
-    public ResponseEntity<Courier> getCourier(@PathVariable("id") long id) throws Exception {
+    public ResponseEntity<Courier> getCourier(@PathVariable("id") String id) throws Exception {
         try {
             return new ResponseEntity<Courier>(courierService.findCourier(id), HttpStatus.OK);
         } catch (CourierNotFoundException exception) {
@@ -73,7 +73,7 @@ public class Controller {
     }
 
     @RequestMapping(path = "/update_courier/{courier_id}", method = RequestMethod.PUT)
-    public ResponseEntity<Courier> updateCourier(@PathVariable("courier_id") Long id, @RequestBody Courier courierDetails) throws Exception {
+    public ResponseEntity<Courier> updateCourier(@PathVariable("courier_id") String id, @RequestBody Courier courierDetails) throws Exception {
 
         try {
             new ResponseEntity<Courier>(courierService.findCourier(id), HttpStatus.OK);
@@ -81,15 +81,15 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Courier " + id + " not found");
         }
 
-        if (!courierService.isCourierInformationValid(courierDetails)) {
-            throw new CourierNotFoundException("Appropriate Courier Name & Working Hours are required.");
-        }
+//        if (!courierService.isCourierInformationValid(courierDetails)) {
+//            throw new CourierNotFoundException("Appropriate Courier Name & Working Hours are required.");
+//        }
         return new ResponseEntity<Courier>(courierService.updateCourierDetails(id, courierDetails), HttpStatus.OK);
 
     }
 
     @RequestMapping(path = "/delete_courier/{courier_id}", method = RequestMethod.DELETE)
-    public String deleteCourier(@PathVariable("courier_id") Long id) {
+    public String deleteCourier(@PathVariable("courier_id") String id) {
         try {
             courierService.deleteCourier(id);
             return "Courier: " + id + " deleted";

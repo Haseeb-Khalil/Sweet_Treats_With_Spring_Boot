@@ -2,34 +2,32 @@ package com.sweetTreats.Sweet_Treats_With_Spring_Boot.entity;
 
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
-@Entity
+//@Entity
+@Document(collection = "couriers")
 public class Courier {
+    //    private static final AtomicInteger count = new AtomicInteger(0);
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     @NotNull(message = "Cannot be less than three or empty")
-    @Length(min = 3)
+    @Length(min = 3, message = "Correct name is required")
     private String name;
     @NotNull(message = "Cannot be less than one or empty")
-    @Min(1)
+    @Min(value = 1, message = "Correct Distance is required")
     private double maxDistance;
     @NotNull(message = "Cannot be less than one or empty")
-    @Min(1)
+    @Min(value = 1, message = "Correct price per mile is required")
     private double pricePerMile;
     @NotNull(message = "Can not be empty(Format required HH:mm)")
-    private LocalTime startTime;
+    private String startTime; // Changed to String to deal with database issue in MongoDb
     @NotNull(message = "Can not be empty(Format required HH:mm)")
-    private LocalTime endTime;
+    private String endTime; // Changed to String to deal with database issue in MongoDb
     @NotNull(message = "Can not be empty boolean required")
     private boolean hasRefrigeratedBox;
 
@@ -39,21 +37,30 @@ public class Courier {
 
     // Constructor for Courier class.
     public Courier(String name, double maxDistance, double pricePerMile, String startTime, String endTime, boolean hasRefrigeratedBox) {
+        this.id = id;
         this.name = name;
         this.maxDistance = maxDistance;
         this.pricePerMile = pricePerMile;
-        this.startTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
-        this.endTime = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
+        this.startTime = startTime;
+        this.endTime = endTime;
+//        this.startTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
+//        this.endTime = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
         this.hasRefrigeratedBox = hasRefrigeratedBox;
     }
 
+//    public BigInteger idGenerator() {
+//        BigInteger previous = getId();
+//        BigInteger one = new BigInteger(String.valueOf(1));
+//        return previous.add(one);
+//    }
+
     // Getters and Setters
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -81,19 +88,19 @@ public class Courier {
         this.pricePerMile = pricePerMile;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

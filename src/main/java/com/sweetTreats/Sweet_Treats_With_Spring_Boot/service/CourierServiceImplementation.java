@@ -19,8 +19,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
-import static com.sweetTreats.Sweet_Treats_With_Spring_Boot.entity.Order.isValidTime;
-
 @Service
 public class CourierServiceImplementation implements CourierService {
 
@@ -41,31 +39,31 @@ public class CourierServiceImplementation implements CourierService {
     @Autowired
     private CourierRepository courierRepository;
 
-    public boolean isCourierInformationValid(Courier courierDetails) {
-        if (courierDetails.getName().isEmpty() || courierDetails.getName().length() < 3 ||
-                !isValidTime(String.valueOf((courierDetails.getStartTime()))) ||
-                courierDetails.getStartTime().isBefore(LocalTime.parse("09:00", DateTimeFormatter.ofPattern("HH:mm"))) ||
-                courierDetails.getEndTime().isAfter(LocalTime.parse("17:00", DateTimeFormatter.ofPattern("HH:mm"))) ||
-                courierDetails.getStartTime() == null ||
-                courierDetails.getEndTime() == null ||
-                courierDetails.getPricePerMile() < 1 ||
-                courierDetails.getMaxDistance() < 1) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
+//    public boolean isCourierInformationValid(Courier courierDetails) {
+//        if (courierDetails.getName().isEmpty() || courierDetails.getName().length() < 3 ||
+//                !isValidTime(String.valueOf((courierDetails.getStartTime()))) ||
+////                LocalTime.parse(courierDetails.getStartTime()).isBefore(LocalTime.parse("09:00", DateTimeFormatter.ofPattern("HH:mm"))) ||
+////                LocalTime.parse(courierDetails.getEndTime()).isAfter(LocalTime.parse("17:00", DateTimeFormatter.ofPattern("HH:mm"))) ||
+//                courierDetails.getStartTime() == null ||
+//                courierDetails.getEndTime() == null ||
+//                courierDetails.getPricePerMile() < 1 ||
+//                courierDetails.getMaxDistance() < 1) {
+//            return false;
+//        } else {
+//            return true;
+//        }
+//
+//    }
 
     // Add a courier to couriers database
     @Override
-    public Courier addCourier(Courier newCourier) throws Exception {
-        if(isCourierInformationValid(newCourier)) {
+    public Courier addCourier(Courier newCourier) {
+//        if (isCourierInformationValid(newCourier)) {
             LOGGER.log(Level.INFO, "New Courier added: " + newCourier.getName());
             return courierRepository.save(newCourier);
-        } else{
-            throw new Exception("Correct Courier info needed");
-        }
+//        } else {
+//            throw new Exception("Correct Courier info needed");
+//        }
     }
 
     // Get all Couriers
@@ -77,7 +75,7 @@ public class CourierServiceImplementation implements CourierService {
 
     // Get a courier with an ID
     @Override
-    public Courier findCourier(long id) throws Exception {
+    public Courier findCourier(String id) throws Exception {
         Optional<Courier> courier = courierRepository.findById(id);
         if (courier.isPresent()) {
             LOGGER.log(Level.INFO, "Getting a Courier With ID: " + id);
@@ -91,7 +89,7 @@ public class CourierServiceImplementation implements CourierService {
 
     // Check if courier is available or not
     public boolean isAvailable(Order order, Courier courier) {
-        return order.getOrderTime().isAfter(courier.getStartTime()) && order.getOrderTime().isBefore(courier.getEndTime()) && order.getDistance() <= courier.getMaxDistance() && order.isRefrigeratedBoxRequired() == courier.isHasRefrigeratedBox();
+        return order.getOrderTime().isAfter(LocalTime.parse(courier.getStartTime())) && order.getOrderTime().isBefore(LocalTime.parse(courier.getEndTime())) && order.getDistance() <= courier.getMaxDistance() && order.isRefrigeratedBoxRequired() == courier.isHasRefrigeratedBox();
     }
 
 
@@ -99,12 +97,12 @@ public class CourierServiceImplementation implements CourierService {
     @Override
     public Courier getBestSuitableCourier(Order order) {
         List<Courier> couriers = (List<Courier>) courierRepository.findAll();
-        if (order.getDistance() <= 0) {
-            throw new CourierNotFoundException("Correct Distance is required");
-        }
-        if (order.getOrderTime().isBefore(LocalTime.parse("09:00", DateTimeFormatter.ofPattern("HH:mm"))) || order.getOrderTime().isAfter(LocalTime.parse("17:00", DateTimeFormatter.ofPattern("HH:mm")))) {
-            throw new CourierNotFoundException("Order time is outside of working hours");
-        }
+//        if (order.getDistance() <= 0) {
+//            throw new CourierNotFoundException("Correct Distance is required");
+//        }
+//        if (order.getOrderTime().isBefore(LocalTime.parse("09:00", DateTimeFormatter.ofPattern("HH:mm"))) || order.getOrderTime().isAfter(LocalTime.parse("17:00", DateTimeFormatter.ofPattern("HH:mm")))) {
+//            throw new CourierNotFoundException("Order time is outside of working hours");
+//        }
 
 
         List<Courier> availableCouriers = couriers.stream().filter(courier -> isAvailable(order, courier)).collect(Collectors.toList()); // List of available couriers
@@ -130,7 +128,7 @@ public class CourierServiceImplementation implements CourierService {
 
     // Update a courier's Details
     @Override
-    public Courier updateCourierDetails(Long id, Courier courierDetails) {
+    public Courier updateCourierDetails(String id, Courier courierDetails) {
         try {
             Courier courier = courierRepository.findById(id).get();
             LOGGER.log(Level.INFO, "Updating Courier Details of Id: " + id + " Name: " + courier.getName() +
@@ -140,31 +138,32 @@ public class CourierServiceImplementation implements CourierService {
                     "\n" + "Has Refrigerated Box: " + courier.isHasRefrigeratedBox() + " to: " + courierDetails.isHasRefrigeratedBox() +
                     "\n" + "Price Per Mile: £" + courier.getPricePerMile() + " to: £" + courierDetails.getPricePerMile());
 
-            if (isCourierInformationValid(courierDetails)) {
+//            if (isCourierInformationValid(courierDetails)) {
                 courier.setName(courierDetails.getName());
                 courier.setStartTime(courierDetails.getStartTime());
                 courier.setEndTime(courierDetails.getEndTime());
                 courier.setMaxDistance(String.valueOf(courierDetails.getMaxDistance()));
                 courier.setPricePerMile(courierDetails.getPricePerMile());
                 courier.setHasRefrigeratedBox(courierDetails.isHasRefrigeratedBox());
-            }
+//            }
             return courierRepository.save(courier);
 
         } catch (CourierNotFoundException courierNotFoundException) {
             LOGGER.log(Level.INFO, "Courier: " + id + " is not found.");
             throw new CourierNotFoundException(" No Courier Found with Id: " + id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
+//        catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 
     // Delete a courier
     @Override
-    public void deleteCourier(Long id) {
+    public void deleteCourier(String id) {
         Optional<Courier> courier = courierRepository.findById(id);
         if (courier.isPresent()) {
-            LOGGER.log(Level.INFO, "Courier: " + id + " has been Deleted.");
+            LOGGER.log(Level.INFO, "Deleting Courier: " + id + ".");
             courierRepository.deleteById(id);
         } else {
             LOGGER.log(Level.INFO, "Courier: " + id + " is not found.");

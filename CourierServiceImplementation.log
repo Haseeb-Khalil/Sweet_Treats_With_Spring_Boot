@@ -1,0 +1,14 @@
+Sept 16, 2022 4:21:17 PM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation addCourier
+INFO: New Courier added: 
+Sept 16, 2022 4:21:25 PM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getAllCouriers
+INFO: Getting All Couriers.
+Sept 16, 2022 4:21:37 PM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation deleteCourier
+INFO: Deleting Courier: 632494008018107a8f8cdd93.
+Sept 16, 2022 4:21:46 PM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation deleteCourier
+INFO: Deleting Courier: 6324946d9b8dfa4b12b2b930.
+Sept 16, 2022 4:21:50 PM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getAllCouriers
+INFO: Getting All Couriers.
+Sept 16, 2022 4:22:21 PM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation addCourier
+INFO: New Courier added: null
+Sept 16, 2022 4:22:26 PM com.sweetTreats.Sweet_Treats_With_Spring_Boot.service.CourierServiceImplementation getAllCouriers
+INFO: Getting All Couriers.
